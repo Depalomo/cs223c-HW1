@@ -6,21 +6,19 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 
 int main() {
-float vol1 = 0.0;
-float vol2 = 0.0;
-float vol3 = 0.0;
-float per1 = 0.0;
-float per2 = 0.0;
-float per3 = 0.0;
 
 printf("Welcome to Modern Chemistry brought to by Chief Software Engineer Damon Palomo\n");
 
+void PrintTime() {
+//get local time.
 time_t current_linux_time;
  current_linux_time = time(NULL);
 struct tm * broken = localtime(&current_linux_time);
 
+//determine if am or pm.
 const char *ampm;
 if(broken->tm_hour < 12) {
     ampm = "am";
@@ -28,6 +26,7 @@ if(broken->tm_hour < 12) {
     ampm = "pm";
 }
 
+//determine the month name.
 const char *month;
 switch(broken->tm_mon + 1) {
     case 1: month = "January";
@@ -56,7 +55,7 @@ switch(broken->tm_mon + 1) {
             break;
 }
 
-
+//display time.
  if(broken == NULL)
      printf("A call to function localtime failed.\n");
  else
@@ -67,14 +66,63 @@ switch(broken->tm_mon + 1) {
              broken->tm_hour,
              broken->tm_min, 
              ampm); 
+}
 
+//display date and time.
+PrintTime();
+
+//get users name.
 printf("Please enter your user name: ");
 char user[40];
 fgets(user, 40, stdin);
 
+//get users title and remove endline character.
 printf("Please enter your title: (Director, Sargent, Ms, Chief, Engineer, Fishmonger, etc): ");
 char title[40];
 fgets(title, 40, stdin);
+title[strcspn(title, "\n")] = '\0';
 
-printf("Thank you %s %s \n", title, user);
+//redisplay user inputs. 
+printf("Thank you %s %s", title, user);
+
+//total_volume, alc_amt
+double total_volume;
+double alc_amt = 0.0;
+double volume = 0;
+double percent = 0;
+for (int count = 1; count < 4; count++) {
+ //get the volume(ml) and percent alcohol of each beaker from student.
+ printf("Please enter the volume(ml) of the liquid in beaker #%d: ", count);
+ scanf("%lf", &volume);
+ total_volume += volume;
+ printf("Please enter the percent of alcohol in beaker #%d as decimal fraction: ", count);
+ scanf("%lf", &percent);
+  // make sure the user inputs a decimal fraction.
+ while(percent > 1) {
+  printf("Please enter as a decimal fraction: ");
+  scanf("%lf", &percent);
+ }
+ // calculate volume of alcohol.
+ alc_amt += (volume * percent);
+}
+
+//calculate alcohol percentage
+alc_amt = (alc_amt / total_volume);
+
+        printf("The final beaker contains %.2f ml of fluid of which contains %.3f%% is alcohol.\n", total_volume, 100 * alc_amt);
+
+ //print the date and time again.
+ PrintTime();
+
+//print time since the last epoch.
+time_t epoch = time(NULL);
+printf("The time since the epoch is %lu seconds.\n", epoch);
+
+//farewell message
+printf("Have a good day %s %s", title, user);
+
+//return 0
+printf("A zero will be retunred to the operating system.\n");
+return 0;
+
 }
