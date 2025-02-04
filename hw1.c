@@ -20,34 +20,13 @@ if(broken->tm_hour > 12) {
         broken->tm_hour -=12;
 }
 
-//determine the month name.
-const char *month;
-switch(broken->tm_mon + 1) {
-    case 1: month = "January";
-            break;
-    case 2: month = "February";
-            break;
-    case 3: month = "March";
-            break;
-    case 4: month = "April";
-            break;
-    case 5: month = "May";
-            break;
-    case 6: month = "June";
-            break;
-    case 7: month = "July";
-            break;
-    case 8: month = "August";
-            break;
-    case 9: month = "September";
-            break;
-    case 10: month = "October";
-            break;
-    case 11: month = "November";
-            break;
-    case 12: month = "December";
-            break;
-}
+//determine the month name from an array by using month number as index.
+const char* month;
+const char* months[] = {
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+};
+month = months[broken->tm_mon];
 
 //display time.
  if(broken == NULL)
@@ -97,7 +76,7 @@ for (int count = 1; count < 4; count++) {
  scanf("%lf", &percent);
   // make sure the user inputs a decimal fraction.
  while(percent > 1) {
-  printf("Please enter as a decimal fraction: ");
+  printf("Must be between 1.00 and 0.00: ");
   scanf("%lf", &percent);
  }
  // calculate volume of alcohol.
