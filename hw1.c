@@ -1,8 +1,12 @@
 // Damon Palomo
+// CWID: 885521658
 // dpalomo@csu.fullerton.edu
 // CPSC 223C
 // Due date: February 12, 2025 before 2:00am.
-// Assignment 1: calculate total volume (ml) between 3 beakers and total percent alcohol
+// Purpose Statement: Use the time library to display time to the terminal.
+// Use input and output functions from the standard io library to implement
+// reading and writing from terminal. Calculate total percentage of alcohol
+// between 3 beakers of liquid in a chemistry class.
 
 #include <stdio.h>
 #include <time.h>
@@ -37,8 +41,8 @@ month = months[broken->tm_mon];
              month,
              broken->tm_mday,
              broken->tm_hour,
-             broken->tm_min, 
-             ampm); 
+             broken->tm_min,
+             ampm);
 }
 
 int main() {
@@ -59,7 +63,7 @@ char title[40];
 fgets(title, 40, stdin);
 title[strcspn(title, "\n")] = '\0';
 
-//redisplay user inputs. 
+//redisplay user inputs.
 printf("Thank you %s %s", title, user);
 
 //total_volume, alc_amt
@@ -86,7 +90,8 @@ for (int count = 1; count < 4; count++) {
 //calculate alcohol percentage
 alc_amt = (alc_amt / total_volume);
 
-        printf("The final beaker contains %.2f ml of fluid of which contains %.3f%% alcohol.\n", total_volume, 100 * alc_amt);
+//print out calculated results.
+printf("The final beaker contains %.2f ml of fluid of which contains %.3f%% alcohol.\n", total_volume, 100 * alc_amt);
 
  //print the date and time again.
  PrintTime();
