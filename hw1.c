@@ -8,10 +8,6 @@
 #include <time.h>
 #include <string.h>
 
-int main() {
-
-printf("Welcome to Modern Chemistry brought to by Chief Software Engineer Damon Palomo\n");
-
 void PrintTime() {
 //get local time.
 time_t current_linux_time;
@@ -19,11 +15,9 @@ time_t current_linux_time;
 struct tm * broken = localtime(&current_linux_time);
 
 //determine if am or pm.
-const char *ampm;
-if(broken->tm_hour < 12) {
-    ampm = "am";
-} else {
-    ampm = "pm";
+const char *ampm = (broken->tm_hour < 12) ? "am" : "pm";
+if(broken->tm_hour > 12) {
+        broken->tm_hour -=12;
 }
 
 //determine the month name.
@@ -68,6 +62,10 @@ switch(broken->tm_mon + 1) {
              ampm); 
 }
 
+int main() {
+
+printf("Welcome to Modern Chemistry brought to by Chief Software Engineer Damon Palomo\n");
+
 //display date and time.
 PrintTime();
 
@@ -109,7 +107,7 @@ for (int count = 1; count < 4; count++) {
 //calculate alcohol percentage
 alc_amt = (alc_amt / total_volume);
 
-        printf("The final beaker contains %.2f ml of fluid of which contains %.3f%% is alcohol.\n", total_volume, 100 * alc_amt);
+        printf("The final beaker contains %.2f ml of fluid of which contains %.3f%% alcohol.\n", total_volume, 100 * alc_amt);
 
  //print the date and time again.
  PrintTime();
