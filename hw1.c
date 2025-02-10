@@ -1,4 +1,5 @@
 // Damon Palomo
+// CWID: 885521658
 // dpalomo@csu.fullerton.edu
 // CPSC 223C
 // Due date: February 12, 2025 before 2:00am.
@@ -30,7 +31,7 @@ char title[40];
 fgets(title, 40, stdin);
 title[strcspn(title, "\n")] = '\0';
 
-//redisplay user inputs. 
+//redisplay user inputs.
 printf("Thank you %s %s", title, user);
 
 double total_volume;

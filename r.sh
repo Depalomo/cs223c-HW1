@@ -1,8 +1,8 @@
-#!/bin/bash
+#/bin/bash
 
 #Program: Assignment 1
 #Author: Damon Palomo
-#This bash file is part of the program "Chemistry".
+#This bash file is part of the program "Chemistry/Assign1".
 
 #Delete some un-needed files
 rm *.o
