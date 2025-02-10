@@ -2,44 +2,15 @@
 // dpalomo@csu.fullerton.edu
 // CPSC 223C
 // Due date: February 12, 2025 before 2:00am.
-// Assignment 1: calculate total volume (ml) between 3 beakers and total percent alcohol
+// Assignment 1: Calculate total volume (ml) between 3 beakers and total percent alcohol.
+// Use the input output functions to communicate with the user and request inputs. Use the
+// time functions to output formatted time to the terminal. Use functions defined in header
+// to handle any user-end typos.
 
+#include "fun.h"
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
-
-void PrintTime() {
-//get local time.
-time_t current_linux_time;
- current_linux_time = time(NULL);
-struct tm * broken = localtime(&current_linux_time);
-
-//determine if am or pm.
-const char *ampm = (broken->tm_hour < 12) ? "am" : "pm";
-if(broken->tm_hour > 12) {
-        broken->tm_hour -=12;
-}
-
-//determine the month name from an array by using month number as index.
-const char* month;
-const char* months[] = {
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-};
-month = months[broken->tm_mon];
-
-//display time.
- if(broken == NULL)
-     printf("A call to function localtime failed.\n");
- else
-     printf("The time is now %04d %s %02d @ %02d:%02d%s\n",
-             broken->tm_year+1900,
-             month,
-             broken->tm_mday,
-             broken->tm_hour,
-             broken->tm_min, 
-             ampm); 
-}
 
 int main() {
 
@@ -62,31 +33,45 @@ title[strcspn(title, "\n")] = '\0';
 //redisplay user inputs. 
 printf("Thank you %s %s", title, user);
 
-//total_volume, alc_amt
 double total_volume;
 double alc_amt = 0.0;
 double volume = 0;
 double percent = 0;
+int input_return = 0;                                // If input is invalid return value of scanf() != 1
+
 for (int count = 1; count < 4; count++) {
+
  //get the volume(ml) and percent alcohol of each beaker from student.
  printf("Please enter the volume(ml) of the liquid in beaker #%d: ", count);
- scanf("%lf", &volume);
+ input_return = scanf("%lf", &volume);
+ //handle if user does not input a double.
+ handling(&input_return, &volume);
+ printf("volume entered: %.3lf\n", volume);
+
+ //add volume of current beaker to total.
  total_volume += volume;
+ 
+//does the same as previous but instead taking in percent alcohol.
  printf("Please enter the percent of alcohol in beaker #%d as decimal fraction: ", count);
- scanf("%lf", &percent);
-  // make sure the user inputs a decimal fraction.
- while(percent > 1) {
-  printf("Must be between 1.00 and 0.00: ");
-  scanf("%lf", &percent);
- }
- // calculate volume of alcohol.
+ input_return = scanf("%lf", &percent);
+ handling(&input_return, &percent);
+
+ // make sure the user inputs a decimal fraction.
+ while(0 > percent || percent > 1) {
+        printf("Must be between 0.00 and 1.00: ");
+        input_return = scanf("%lf", &percent);
+        handling(&input_return, &percent);
+       }
+ printf("percent entered: %.3lf\n", percent);
+
+ // calculate volume of alcohol by summing the product of each input.
  alc_amt += (volume * percent);
 }
 
 //calculate alcohol percentage
 alc_amt = (alc_amt / total_volume);
 
-        printf("The final beaker contains %.2f ml of fluid of which contains %.3f%% alcohol.\n", total_volume, 100 * alc_amt);
+printf("The final beaker contains %.2f ml of fluid of which contains %.3f%% alcohol.\n", total_volume, 100 * alc_amt);
 
  //print the date and time again.
  PrintTime();
@@ -100,6 +85,10 @@ printf("Have a good day %s %s", title, user);
 
 //return 0
 printf("A zero will be retunred to the operating system.\n");
+
+printf("====End of execution ===================================\n");
 return 0;
+
+
 
 }
